@@ -1,5 +1,5 @@
 locals {
-  build_date = formatdate("YYYY-MM-DD", timestamp())
+  build_date = formatdate("YYYY-MM-DD-hhmmss", timestamp())
   project_prefix = lower(replace(replace("${var.project_rg}", "_", ""), "-", ""))
   image_name = "${local.project_prefix}-${var.project_name}-${local.build_date}"
   scripts_path = "${path.root}/scripts"
@@ -30,9 +30,13 @@ source "azure-arm" "ubuntu" {
 build {
   sources = ["source.azure-arm.ubuntu"]
   provisioner "shell" {
+    environment_vars = [
+      "FQDN=${var.project_name}.${local.project_prefix}",
+    ]
     execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
     scripts = [
-      "${local.scripts_path}/common/apt_upgrade.sh"
+      "${local.scripts_path}/common/apt_upgrade.sh",
+      "${local.scripts_path}/${var.project_name}/install.sh"
     ]
   }
 }
