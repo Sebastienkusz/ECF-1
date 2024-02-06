@@ -12,4 +12,3 @@ apt-get install -y jenkins
 systemctl enable jenkins
 
 ufw allow 8080/tcp
-ufw reload
