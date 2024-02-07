@@ -21,6 +21,8 @@ Go to the packer folder
 
     cd Packer
 
+    packer init .
+
     packer build -var-file="gitlab.pkrvars.hcl" .
 
     packer build -var-file="jenkins.pkrvars.hcl" .

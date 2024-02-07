@@ -2,7 +2,6 @@
 locals {
   subscription_id     = "c56aea2c-50de-4adc-9673-6a8008892c21"
   resource_group_name = "Sebastien_K"
-  image_os            = "sebastienk-gitlab-2024-02-06"
   location            = data.azurerm_resource_group.main.location
   application         = basename(abspath(path.root))
 }
@@ -19,7 +18,16 @@ locals {
   vm_domain_name_label        = "${local.application}-${lower(replace(local.resource_group_name, "_", ""))}"
   public_ip_sku               = "Standard"
 
+  application_port = "80"
+
+  image_os = "${lower(replace(local.resource_group_name, "_", ""))}-${local.application}"
+
+  os_image_tags = {
+    Version = "0.5.0"
+  }
+
   vm_size = "Standard_B4ls_v2"
+  ssh_port = "10022"
 
   os_disk_caching           = "ReadWrite"
   os_disk_create_option     = "FromImage"
