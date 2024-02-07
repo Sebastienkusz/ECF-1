@@ -13,7 +13,7 @@ source "azure-arm" "ubuntu" {
   tenant_id          = var.tenant_id
   subscription_id    = var.subscription_id
 
-  managed_image_name                = "${local.image_name}-${replace("${var.os_image_tags.Version}", ".", "-")}"
+  managed_image_name                = "${local.image_name}-${replace("${var.os_image_tags_Version}", ".", "-")}"
   managed_image_resource_group_name = var.project_rg
 
   os_type         = "Linux"
@@ -24,9 +24,12 @@ source "azure-arm" "ubuntu" {
   build_resource_group_name = var.project_rg
   temp_compute_name         = local.image_name
   temp_nic_name             = local.image_name
-  vm_size                   = "Standard_DS2_v2"
+  vm_size                   = "Standard_DS3_v2"
 
-  azure_tags = var.os_image_tags
+  azure_tags = {
+    "Version" = var.os_image_tags_Version
+    "Date"    = local.build_date
+  }
 }
 
 build {

@@ -1,4 +1,2 @@
-project_name = "gitlab"
-os_image_tags = {
-    Version = "1.0.0"
-}
+project_name          = "gitlab"
+os_image_tags_Version = "1.0.0"

@@ -63,11 +63,13 @@ resource "azurerm_network_security_rule" "NSG_Appli_Rules_HTTP" {
 
 # data "azurerm_images" "search_os" {
 #   resource_group_name = var.resource_group
-#   tags_filter = var.os_image_tags 
+#   tags_filter = {
+#     "Version" = "2.0.0" #var.os_image_tags
+#    }
 # }
 
 data "azurerm_image" "search_os" {
-  name_regex          = "^${var.image_os}-\\d*"
+  name_regex          = "^${var.image_os}-${var.os_image_version}"
   sort_descending     = true
   resource_group_name = var.resource_group
 }

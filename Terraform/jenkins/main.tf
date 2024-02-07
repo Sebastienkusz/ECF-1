@@ -17,12 +17,13 @@ module "vm" {
   os_disk_create_option     = local.os_disk_create_option
   os_disk_managed_disk_type = local.os_disk_managed_disk_type
   image_os                  = local.image_os
+  os_image_version          = replace("${local.os_image_version}", ".", "-")
   application_name          = local.application
 
   admin_username   = local.admin_username
   path             = local.path
   ssh_key          = local.ssh_key
-  ssh_port = local.ssh_port
+  ssh_port         = local.ssh_port
   ssh_ip_filter    = local.ssh_ip_filter
   application_port = local.application_port
 
