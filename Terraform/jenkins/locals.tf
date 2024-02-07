@@ -22,9 +22,9 @@ locals {
 
   image_os = "${lower(replace(local.resource_group_name, "_", ""))}-${local.application}"
 
-  
+  os_image_version = "1.0.0"
 
-  vm_size = "Standard_B4ls_v2"
+  vm_size  = "Standard_B4ls_v2"
   ssh_port = "22"
 
   os_disk_caching           = "ReadWrite"

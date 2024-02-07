@@ -32,10 +32,7 @@ variable "subscription_id" {
   default     = "${env("ARM_SUBSCRIPTION_ID")}"
 }
 
-variable "os_image_tags" {
-  description = "Tags of the os image"
-  type = map(string)
-  default = {
-    Version = ""
-    }
+variable "os_image_tags_Version" {
+  description = "Version Tag of the os image"
+  type        = string
 }

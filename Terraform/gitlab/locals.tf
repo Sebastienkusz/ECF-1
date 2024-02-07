@@ -22,12 +22,10 @@ locals {
 
   image_os = "${lower(replace(local.resource_group_name, "_", ""))}-${local.application}"
 
-  os_image_tags = {
-    Version = "0.5.0"
-  }
+  os_image_version = "1.0.0"
 
-  vm_size = "Standard_B4ls_v2"
-  ssh_port = "10022"
+  vm_size  = "Standard_B4ls_v2"
+  ssh_port = "22"
 
   os_disk_caching           = "ReadWrite"
   os_disk_create_option     = "FromImage"
