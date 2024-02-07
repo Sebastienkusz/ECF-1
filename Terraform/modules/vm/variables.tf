@@ -125,6 +125,14 @@ variable "image_os" {
   nullable    = false
 }
 
+variable "os_image_tags" {
+  description = "Tags of the os image"
+  type = map(string)
+  default = {
+    Version = ""
+    }
+}
+
 variable "application_name" {
   type        = string
   description = ""

@@ -22,6 +22,7 @@ module "vm" {
   admin_username   = local.admin_username
   path             = local.path
   ssh_key          = local.ssh_key
+  ssh_port = local.ssh_port
   ssh_ip_filter    = local.ssh_ip_filter
   application_port = local.application_port
 

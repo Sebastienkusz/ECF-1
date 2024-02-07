@@ -31,7 +31,7 @@ resource "azurerm_network_interface_security_group_association" "main" {
   network_security_group_id = azurerm_network_security_group.main.id
 }
 
-# Règle de sécurité pour le port 22 (SSH) depuis n'importe quelle source sur la VM
+# Règle de sécurité pour le port (SSH) depuis n'importe quelle source sur la VM
 resource "azurerm_network_security_rule" "ssh" {
   name                        = "Allow-SSH-Inbound"
   priority                    = 110
@@ -61,10 +61,23 @@ resource "azurerm_network_security_rule" "NSG_Appli_Rules_HTTP" {
   network_security_group_name = azurerm_network_security_group.main.name
 }
 
-data "azurerm_image" "search" {
-  name                = var.image_os
+# data "azurerm_images" "search_os" {
+#   resource_group_name = var.resource_group
+#   tags_filter = var.os_image_tags 
+# }
+
+data "azurerm_image" "search_os" {
+  name_regex          = "^${var.image_os}-\\d*"
+  sort_descending     = true
   resource_group_name = var.resource_group
 }
+
+# resource "azurerm_image" "os_image" {
+#   name                          = "${data.azurerm_image.search_os.name_regex}"
+#   location                      = var.location
+#   resource_group_name           = var.resource_group
+#   tags = var.os_image_tags
+# }  
 
 resource "azurerm_virtual_machine" "main" {
   name                          = "${var.application_name}-vm"
@@ -83,7 +96,7 @@ resource "azurerm_virtual_machine" "main" {
   }
 
   storage_image_reference {
-    id = data.azurerm_image.search.id
+    id = data.azurerm_image.search_os.id
     #   publisher = var.image_publisher
     #   offer     = var.image_offer
     #   sku       = var.image_sku

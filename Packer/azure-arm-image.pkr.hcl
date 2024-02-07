@@ -1,7 +1,7 @@
 locals {
-  build_date     = formatdate("YYYY-MM-DD", timestamp())
+  build_date     = formatdate("YYYY-MM-DD-hhmmss", timestamp())
   project_prefix = lower(replace(replace("${var.project_rg}", "_", ""), "-", ""))
-  image_name     = "${local.project_prefix}-${var.project_name}-${local.build_date}"
+  image_name     = "${local.project_prefix}-${var.project_name}"
   scripts_path   = "${path.root}/scripts"
   files_path     = "${path.root}/files"
 }
@@ -13,7 +13,7 @@ source "azure-arm" "ubuntu" {
   tenant_id          = var.tenant_id
   subscription_id    = var.subscription_id
 
-  managed_image_name                = local.image_name
+  managed_image_name                = "${local.image_name}-${replace("${var.os_image_tags.Version}", ".", "-")}"
   managed_image_resource_group_name = var.project_rg
 
   os_type         = "Linux"
@@ -25,6 +25,8 @@ source "azure-arm" "ubuntu" {
   temp_compute_name         = local.image_name
   temp_nic_name             = local.image_name
   vm_size                   = "Standard_DS2_v2"
+
+  azure_tags = var.os_image_tags
 }
 
 build {

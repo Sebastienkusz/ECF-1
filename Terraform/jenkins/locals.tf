@@ -2,7 +2,6 @@
 locals {
   subscription_id     = "c56aea2c-50de-4adc-9673-6a8008892c21"
   resource_group_name = "Sebastien_K"
-  image_os            = "sebastienk-jenkins-2024-02-06"
   location            = data.azurerm_resource_group.main.location
   application         = basename(abspath(path.root))
 }
@@ -21,7 +20,12 @@ locals {
 
   application_port = "8080"
 
+  image_os = "${lower(replace(local.resource_group_name, "_", ""))}-${local.application}"
+
+  
+
   vm_size = "Standard_B4ls_v2"
+  ssh_port = "22"
 
   os_disk_caching           = "ReadWrite"
   os_disk_create_option     = "FromImage"
