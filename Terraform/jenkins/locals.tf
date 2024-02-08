@@ -18,8 +18,6 @@ locals {
   vm_domain_name_label        = "${local.application}-${lower(replace(local.resource_group_name, "_", ""))}"
   public_ip_sku               = "Standard"
 
-  application_port = "8080"
-
   image_os = "${lower(replace(local.resource_group_name, "_", ""))}-${local.application}"
 
   os_image_version = "1.0.0"
@@ -44,9 +42,8 @@ locals {
 locals {
   users = {
     sebastien = {
-      sshkey      = "sebastien"
-      private_key = "sebastien"
-      ip          = "83.195.211.184"
+      private_ssh_key_name = "sebastien"
+      ip                   = "83.195.211.184"
     }
   }
 }

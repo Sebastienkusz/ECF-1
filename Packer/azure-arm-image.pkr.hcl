@@ -24,7 +24,7 @@ source "azure-arm" "ubuntu" {
   build_resource_group_name = var.project_rg
   temp_compute_name         = local.image_name
   temp_nic_name             = local.image_name
-  vm_size                   = "Standard_DS3_v2"
+  vm_size                   = "Standard_DS2_v2"
 
   azure_tags = {
     "Version" = var.os_image_tags_Version
@@ -37,11 +37,27 @@ build {
   provisioner "shell" {
     environment_vars = [
       "FQDN=${var.project_name}-${local.project_prefix}",
+      "FIRSTUSER=${var.ssh_user_name}",
     ]
     execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
     scripts = [
       "${local.scripts_path}/common/apt_upgrade.sh",
-      "${local.scripts_path}/${var.project_name}/install.sh"
+      "${local.scripts_path}/${var.project_name}/install.sh",
+      "${local.scripts_path}/common/add_user_sudoer.sh",
     ]
   }
+
+  provisioner "file" {
+    source      = "${local.files_path}/${var.ssh_key_name}.pub"
+    destination = "/tmp/${var.ssh_key_name}.pub"
+  }
+
+  provisioner "shell" {
+    execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
+    inline_shebang  = "/bin/sh -xe"
+    inline = [
+      "sudo cat /tmp/${var.ssh_key_name}.pub > /home/${var.ssh_user_name}/.ssh/authorized_keys",
+    ]
+  }
+
 }
