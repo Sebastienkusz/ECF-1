@@ -105,12 +105,26 @@ variable "ssh_port" {
   default     = "22"
 }
 
-variable "application_port" {
+variable "application_port_HTTP" {
   type        = string
   description = "Application Port"
   nullable    = false
   default     = "80"
 }
+
+variable "application_port_HTTPS" {
+  type        = string
+  description = "Application Port"
+  nullable    = false
+  default     = "443"
+}
+
+# variable "application_port_custom_HTTP" {
+#   type        = string
+#   description = "Application Port"
+#   nullable    = false
+#   default     = "8080"
+# }
 
 variable "ssh_ip_filter" {
   type        = list(any)

@@ -36,3 +36,13 @@ variable "os_image_tags_Version" {
   description = "Version Tag of the os image"
   type        = string
 }
+
+variable "ssh_user_name" {
+  description = "User name with sudo"
+  type        = string
+}
+
+variable "ssh_key_name" {
+  description = "Ssh key of user"
+  type        = string
+}
