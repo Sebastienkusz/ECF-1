@@ -76,40 +76,26 @@ resource "azurerm_network_security_rule" "NSG_Appli_Rules_HTTPS" {
   network_security_group_name = azurerm_network_security_group.main.name
 }
 
-# # Règle de sécurité pour le port 8080 (HTTPS) depuis n'importe quelle source sur la VM
-# resource "azurerm_network_security_rule" "NSG_Appli_Rules_HTTP" {
-#   name                        = "custom_HTTP_Rule"
-#   priority                    = 140
-#   direction                   = "Inbound"
-#   access                      = "Allow"
-#   protocol                    = "Tcp"
-#   source_port_range           = "*"
-#   destination_port_range      = var.application_port_HTTPS
-#   source_address_prefix       = "*"
-#   destination_address_prefix  = "*"
-#   resource_group_name         = var.resource_group
-#   network_security_group_name = azurerm_network_security_group.main.name
-# }
-
-# data "azurerm_images" "search_os" {
-#   resource_group_name = var.resource_group
-#   tags_filter = {
-#     "Version" = "2.0.0" #var.os_image_tags
-#    }
-# }
+# Règle de sécurité pour le port 8080 (HTTPS) depuis n'importe quelle source sur la VM
+resource "azurerm_network_security_rule" "NSG_Appli_Rules_custom_HTTP" {
+  name                        = "custom_HTTP_Rule"
+  priority                    = 140
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = var.application_port_custom_HTTP
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group
+  network_security_group_name = azurerm_network_security_group.main.name
+}
 
 data "azurerm_image" "search_os" {
   name_regex          = "^${var.image_os}-${var.os_image_version}"
   sort_descending     = true
   resource_group_name = var.resource_group
 }
-
-# resource "azurerm_image" "os_image" {
-#   name                          = "${data.azurerm_image.search_os.name_regex}"
-#   location                      = var.location
-#   resource_group_name           = var.resource_group
-#   tags = var.os_image_tags
-# }  
 
 resource "azurerm_virtual_machine" "main" {
   name                          = "${var.application_name}-vm"
@@ -129,10 +115,6 @@ resource "azurerm_virtual_machine" "main" {
 
   storage_image_reference {
     id = data.azurerm_image.search_os.id
-    #   publisher = var.image_publisher
-    #   offer     = var.image_offer
-    #   sku       = var.image_sku
-    #   version   = var.image_version
   }
 
   os_profile {
@@ -149,13 +131,4 @@ resource "azurerm_virtual_machine" "main" {
     }
   }
 
-  #   provisioner "remote-exec" {
-  #   inline = [
-  #     "sudo chmod +x /home/sebastien/post-install.sh"
-  #   ]
-  # }
-
-  # provisioner "local-exec" {
-  #   command = "sudo chmod +x /home/sebastien/post-install.sh"
-  # }
 }

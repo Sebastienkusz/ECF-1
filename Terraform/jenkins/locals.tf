@@ -25,6 +25,8 @@ locals {
   vm_size  = "Standard_B4ls_v2"
   ssh_port = "22"
 
+  application_port_custom_HTTP = "8080"
+
   os_disk_caching           = "ReadWrite"
   os_disk_create_option     = "FromImage"
   os_disk_managed_disk_type = "Standard_LRS"

@@ -34,26 +34,6 @@ variable "os_disk_managed_disk_type" {
   description = "(Optional) Specifies the type of Managed Disk which should be created. Possible values are Standard_LRS, StandardSSD_LRS or Premium_LRS"
 }
 
-# variable "image_publisher" {
-#   type        = string
-#   description = "(Optional) Specifies the publisher of the image used to create the virtual machine. Changing this forces a new resource to be created."
-# }
-
-# variable "image_offer" {
-#   type        = string
-#   description = "(Optional) Specifies the offer of the image used to create the virtual machine. Changing this forces a new resource to be created"
-# }
-
-# variable "image_sku" {
-#   type        = string
-#   description = "(Optional) Specifies the SKU of the image used to create the virtual machine. Changing this forces a new resource to be created"
-# }
-
-# variable "image_version" {
-#   type        = string
-#   description = "(Optional) Specifies the version of the image used to create the virtual machine. Changing this forces a new resource to be created"
-# }
-
 variable "admin_username" {
   type        = string
   description = "(Required) Specifies the name of the local administrator account"
@@ -119,12 +99,12 @@ variable "application_port_HTTPS" {
   default     = "443"
 }
 
-# variable "application_port_custom_HTTP" {
-#   type        = string
-#   description = "Application Port"
-#   nullable    = false
-#   default     = "8080"
-# }
+variable "application_port_custom_HTTP" {
+  type        = string
+  description = "Application Port"
+  nullable    = false
+  default     = "80"
+}
 
 variable "ssh_ip_filter" {
   type        = list(any)
