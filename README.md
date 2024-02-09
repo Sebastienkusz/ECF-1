@@ -48,8 +48,18 @@ _For jenkins_
 Go to the terraform folder
 
     cd ../Terraform
+    
 
+.
+### Backend
 
+    $/./Terraform> cd backend
+
+    terraform init
+
+    terraform apply
+
+    
 .
 ### Gitlab
 

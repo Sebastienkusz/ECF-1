@@ -8,9 +8,5 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "=3.62.1"
     }
-    # tls = {
-    #   source  = "hashicorp/tls"
-    #   version = ">= 4.0"
-    # }
   }
 }

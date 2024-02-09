@@ -13,12 +13,13 @@ module "vm" {
   location       = local.location
   vm_size        = local.vm_size
 
-  os_disk_caching           = local.os_disk_caching
-  os_disk_create_option     = local.os_disk_create_option
-  os_disk_managed_disk_type = local.os_disk_managed_disk_type
-  image_os                  = local.image_os
-  os_image_version          = replace("${local.os_image_version}", ".", "-")
-  application_name          = local.application
+  os_disk_caching              = local.os_disk_caching
+  os_disk_create_option        = local.os_disk_create_option
+  os_disk_managed_disk_type    = local.os_disk_managed_disk_type
+  image_os                     = local.image_os
+  os_image_version             = replace("${local.os_image_version}", ".", "-")
+  application_name             = local.application
+  application_port_custom_HTTP = local.application_port_custom_HTTP
 
   admin_username = local.admin_username
   path           = local.path
